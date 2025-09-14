@@ -1,0 +1,33 @@
+# Stage 1: Build
+FROM golang:1.23-alpine AS builder
+
+# install git (buat go get)
+RUN apk add --no-cache git
+
+WORKDIR /app
+
+# copy go.mod dan go.sum dulu (biar cache optimal)
+COPY go.mod go.sum ./
+RUN go mod download
+
+# copy semua kode
+COPY . .
+
+# build binary
+RUN go build -o broker main.go
+
+# Stage 2: Run
+FROM alpine:3.20
+
+# buat folder kerja
+WORKDIR /app
+
+# copy binary dari builder
+COPY --from=builder /app/broker .
+
+# expose port MQTT
+EXPOSE 1883
+EXPOSE 8883
+
+# jalankan broker
+CMD ["./broker"]

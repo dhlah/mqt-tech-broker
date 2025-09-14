@@ -1,0 +1,29 @@
+# Binaries
+/broker
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Output of `go coverage`
+*.out
+
+# Dependency directories
+/vendor/
+
+# Logs
+*.log
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+*.env
+docker-compose.override.yml
